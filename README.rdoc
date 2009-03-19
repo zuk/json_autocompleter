@@ -19,15 +19,18 @@ Install as a plugin into your Rails app:
 
   script/plugin install git://github.com/zuk/json_autocompleter.git
 
+The required scripts, stylesheets, and images will be copied automatically into your
+/public folder during the install.
+
 JSON.Autocompleter is based on the script.aculo.us Autocompleter. This is packaged
 with Rails, so all you have to do is make sure the following scripts are loaded
 in your page:
 
-* controls.js
-* json2.js
-* json_autocomplete.js
+  <%= javascript_include_tag 'controls', 'json2', 'json_autocomplete' %>
 
-Also don't forget to install the <em>auto_complete.css</em> stylesheet.
+Also don't forget to link to the <em>auto_complete.css</em> stylesheet:
+
+  <%= stylesheet_link_tag 'auto_complete' %>
 
 
 === Example 
