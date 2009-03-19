@@ -1,4 +1,4 @@
-= JSON.Autocompleter =
+= JSON.Autocompleter
 
 JSON.Autocompleter gives you a hybrid text/select HTML input widget that fetches
 the possible list of values from a remote JSON source.
@@ -7,13 +7,13 @@ In other words, with a JSON.Autocompleter widget the user can either start typin
 what they're looking for, or they can click a list pulldown.
 
 <b>TODO:</b>
- * It would be nice if this plugin included some Rails helpers.
- * The Autocompleter initializer should be more customizable (for example, we might
-   want to set a custom URL for the list pulldown image).
- * Code needs to be cleaned up...
+* It would be nice if this plugin included some Rails helpers.
+* The Autocompleter initializer should be more customizable (for example, we might
+  want to set a custom URL for the list pulldown image).
+* Code needs to be cleaned up...
 
 
-=== Installation ===
+=== Installation 
 
 Install as a plugin into your Rails app:
 
@@ -23,14 +23,14 @@ JSON.Autocompleter is based on the script.aculo.us Autocompleter. This is packag
 with Rails, so all you have to do is make sure the following scripts are loaded
 in your page:
 
- * controls.js
- * json2.js
- * json_autocomplete.js
+* controls.js
+* json2.js
+* json_autocomplete.js
 
 Also don't forget to install the <em>auto_complete.css</em> stylesheet.
 
 
-=== Example ===
+=== Example 
 
 Set up the widget:
 
