@@ -37,7 +37,7 @@ Set up the widget:
   <div class="auto_complete" id="lunch_meat_autocomplete_container" style="width: 40ex">
     <!-- the text field where the user types -->
     <input type="text" name="lunch_meat_autocomplete" style="width: 40ex" id="lunch_meat_autocomplete" />
-    <!-- the filed where the id of the selected option will be stored -->
+    <!-- the hidden field where the id of the selected option will be stored -->
     <input type="hidden" name="lunch[meat_id]" id="lunch_meat_id" />
     
     <!-- option list will be put here -->
