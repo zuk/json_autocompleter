@@ -1,0 +1,68 @@
+div.auto_complete {
+  width: 420px;
+  /*background-color: #fff ;*/
+}
+div.auto_complete ul {
+  margin:0;
+  padding:0;
+  width:100%;
+  list-style-type:none;
+}
+div.auto_complete ul li {
+  margin:0;
+  padding:3px;
+  background-color: #fff ;
+	text-indent: -20px;
+	padding-left: 24px;
+	padding-right: 4px;
+  font-size: 9pt;
+}
+div.auto_complete ul li:hover {
+	cursor: pointer;
+}
+div.auto_complete ul li.selected {
+  background-color: #ffb ;
+}
+div.auto_complete ul strong.highlight {
+  color: #800 ;
+  margin:0;
+  padding:0;
+}
+
+div.auto_complete div.choices_container {
+  position: absolute; 
+  overflow-x: hidden; 
+  overflow-y: scroll;
+  border: 1px solid #888; 
+  height: 200px;
+}
+
+div.auto_complete span.code {
+  /*font-weight: bold;*/
+}
+
+div.auto_complete span.code-id {
+  display: none;
+}
+
+li.autocomplete_item span.source {
+  font-size: 7pt;
+  font-style: italic;
+	white-space: nowrap;
+	color: #999;
+}
+
+li.autocomplete_item span.disambiguation {
+  font-size: 7pt;
+	white-space: nowrap;
+	color: #099;
+}
+
+li.autocomplete_item.Proposal span.description {
+  color: #666;
+  font-style: italic;
+}
+
+li.autocomplete_item.OfficeProject span.description {
+  color: #11f;
+}
