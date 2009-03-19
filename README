@@ -1,0 +1,83 @@
+JSON.Autocompleter
+=================
+
+JSON.Autocompleter gives you a hybrid text/select HTML input widget that fetches
+the possible list of values from a remote JSON source.
+
+In other words, with a JSON.Autocompleter widget the user can either start typing
+what they're looking for, or they can click a list pulldown.
+
+TODO: 
+ - It would be nice if this plugin included some Rails helpers.
+ - The Autocompleter initializer should be more customizable (for example, we might
+   want to set a custom URL for the list pulldown image).
+ - Code needs to be cleaned up...
+
+
+Example
+=======
+
+Set up the widget:
+
+  <div class="auto_complete" id="lunch_meat_autocomplete_container" style="width: 40ex">
+    <!-- the text field where the user types -->
+    <input type="text" name="lunch_meat_autocomplete" style="width: 40ex" id="lunch_meat_autocomplete" />
+    <!-- the filed where the id of the selected option will be stored -->
+    <input type="hidden" name="lunch[meat_id]" id="lunch_meat_id" />
+    
+    <!-- option list will be put here -->
+    <div class="choices_container" id="lunch_meat_options"></div>
+  </div>  
+
+  <script type="text/javascript>
+    new JSON.Autocompleter(
+      'lunch_meats_autocomplete_container', 
+      'lunch_meat_options', 
+      '/meats.json'
+    )
+  </script>
+
+
+Write a Rails controller to return the JSON data:
+
+  controller Meats < ApplicationController
+    # GET /meats.json
+    def index
+      @meats = Meat.find(:all)
+
+      respond_to do |format|
+        format.json { render :json => @meats.to_json(:methods => [:to_s] }
+      end
+    end
+  end
+
+The string returned by your model's to_s method will be used as the option
+label, so implement this to customize the output (in the future the script
+will be modified to allow for a custom field name to be used).
+
+The JSON data returned by your controller action should look something like this:
+
+  [{"meat": {"id": 1, "to_s": "Salami"}},
+   {"meat": {"id": 2, "to_s": "Ham"}},
+   {"meat": {"id": 3, "to_s": "Hot Dog"}}]
+
+Or this will work too:
+
+  [{"id": 1, "to_s": "Salami"},
+   {"id": 2, "to_s": "Ham"},
+   {"id": 3, "to_s": "Hot Dog"}]
+
+
+
+Installation
+============
+
+Install as a plugin into your Rails app:
+
+  script/plugin install git://github.com/zuk/scriptaculous.json.autocompleter.git
+
+
+
+
+Copyright (c) 2009 Matt Zukowski, released under the MIT license
+
