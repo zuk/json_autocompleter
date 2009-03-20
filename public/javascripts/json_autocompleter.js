@@ -13,21 +13,15 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     this.options.method        = this.options.method || 'get';
     this.options.paramName     = 'autocomplete';
     
-    pulldown = document.createElement('img')
-    pulldown.setAttribute('src', 'http://apps.urbacon.net/assets/images/pulldown.png')
-    pulldown.setAttribute('alt', 'Show All')
-    pulldown.setAttribute('style', 'position: absolute; margin-left: -17px; margin-top: 2px;')
-    this.container.appendChild(pulldown)
     
-    //pulldown_x = (this.element.positionedOffset().left + 
-    //  this.element.getWidth() - 
-    //  16 - 1) + 'px'
-    //pulldown_y = (pulldown.positionedOffset().top + 2) + 'px'
+    pulldown = document.createElement('img');
+    pulldown.setAttribute('src', 'http://apps.urbacon.net/assets/images/pulldown.png');
+    pulldown.setAttribute('alt', 'Show All');
+    pulldown.setAttribute('style', 'position: absolute;');
+    this.container.appendChild(pulldown);
+    this.pulldownTrigger = pulldown;
     
-    //pulldown.style.left = pulldown_x
-    //pulldown.style.top = pulldown_y
-    
-    this.pulldownTrigger = pulldown
+    setTimeout(this.positionPulldownTrigger.bindAsEventListener(this), 50);
     
     Event.observe(this.element, 'dblclick', this.getAllChoices.bindAsEventListener(this));
     Event.observe(this.pulldownTrigger, 'click', this.pulldown.bindAsEventListener(this));
@@ -39,6 +33,18 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     } else {
       this.hide();
     }
+  },
+  
+  positionPulldownTrigger: function() {
+    pulldown_x = (this.element.positionedOffset().left + 
+      this.element.getWidth() - 
+      16) + 'px';
+    pulldown_y = (this.pulldownTrigger.positionedOffset().top + 2) + 'px';
+    
+    this.pulldownTrigger.style.left = pulldown_x;
+    this.pulldownTrigger.style.top = pulldown_y;
+    
+    this.pulldownTrigger = pulldown;
   },
   
   show: function() {
