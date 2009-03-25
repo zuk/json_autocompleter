@@ -13,7 +13,6 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     this.options.method        = this.options.method || 'get';
     this.options.paramName     = 'autocomplete';
     
-    
     pulldown = document.createElement('img');
     pulldown.setAttribute('src', 'http://apps.urbacon.net/assets/images/pulldown.png');
     pulldown.setAttribute('alt', 'Show All');
@@ -89,13 +88,14 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
   
   getAllChoices: function(event) {
     this.startIndicator();
-
-    if(this.options.defaultParams) 
-      this.options.parameters += '&' + this.options.defaultParams;
     
-    options2 = Object.clone(this.options);
-    options2.parameters = null;
-    new Ajax.Request(this.url, options2);
+    parameters = {};
+    for (i in this.options.withFormElements) {
+      parameters[i] = $F(this.options.withFormElements[i]);
+    }
+    this.options.parameters = parameters;
+    
+    new Ajax.Request(this.url, this.options);
     
     this.changed = false;
     this.hasFocus = true;
@@ -106,8 +106,8 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     this.startIndicator();
     
     options2 = Object.clone(this.options);
-    options2.parameters = null;
-    console.log(options2)
+    options2.parameters = this.options.defaultParams;
+    
     new Ajax.Request(this.url, options2);
     
     this.changed = false;
