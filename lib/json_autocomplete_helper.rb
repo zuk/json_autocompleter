@@ -19,6 +19,7 @@ module JsonAutocompleteHelper
     as_user_id      = options[:as_user]
     as_user_id      = as_user_id.id if as_user_id.kind_of?(User)
     
+    on_change       = options[:onchange] || "null"
     
     if as_user_id
       choices_url << (choices_url.include?('?') ? "&" : "?") + "perform_as_user_id=#{as_user_id}"
@@ -76,7 +77,11 @@ module JsonAutocompleteHelper
         '#{base_field_id}_autocomplete_container', 
         '#{base_field_id}_options', 
         '#{choices_url}',
-        {'parameters': #{with}, 'withFormElements': #{with_form_elements}}
+        {
+          'parameters': #{with}, 
+          'withFormElements': #{with_form_elements}, 
+          'onchange': #{on_change}
+        }
       )
     }
     
