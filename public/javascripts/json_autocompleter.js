@@ -36,27 +36,39 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
   
   pulldown: function(event) {
     if (Element.getStyle(this.update, 'display') == 'none') {
+      this.active = true;
+      this.element.focus();
       this.getAllChoices(event);
     } else {
+      this.active = false;
       this.hide();
     }
   },
 
+  onBlur: function(event) {
+    // needed to make click events working
+    if (event.explicitOriginalTarget != this.pulldownTrigger) {
+      setTimeout(this.hide.bind(this), 250);
+      this.hasFocus = false;
+      this.active = false;
+    }
+  },
   
   show: function() {
     if(Element.getStyle(this.update, 'display')=='none') this.options.onShow(this.element, this.update);
     if(!this.iefix && 
-      (Prototype.Browser.IE) &&
+      /*(Prototype.Browser.IE) &&*/
       (Element.getStyle(this.update, 'position')=='absolute')) {
       new Insertion.After(this.update, 
        '<iframe id="' + this.update.id + '_iefix" '+
        'style="display:none;position:absolute;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);" ' +
        'src="javascript:\'\';" frameborder="0" scrolling="no"></iframe>');
       this.iefix = $(this.update.id+'_iefix');
+      this.iefix.style.top = this.element.getHeight() + 'px';
     }
-    if(this.iefix) setTimeout(this.fixIEOverlapping.bind(this), 50);
+    if(this.iefix) setTimeout(this.fixIEOverlapping.bind(this), 60);
     
-    setTimeout(this.fixSize.bind(this), 100);
+    setTimeout(this.fixSize.bind(this), 50);
   },
 
   fixSize: function() {
@@ -125,7 +137,14 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     label_value = Element.collectTextNodes($(selectedElement).down('span.label'))
     
     this.element.value = label_value;
+    
+    previous_id_value = this.id_field.value
+    
     this.id_field.value = id_value
+    
+    if (previous_id_value != id_value && this.options.onchange) {
+      this.options.onchange(id_value);
+    }
     
     this.oldElementValue = this.element.value;
     this.element.focus();
