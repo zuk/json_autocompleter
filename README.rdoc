@@ -37,24 +37,12 @@ Also don't forget to link to the <em>auto_complete.css</em> stylesheet:
 
 Set up the widget:
 
-  <div class="auto_complete" id="lunch_meat_autocomplete_container" style="width: 40ex">
-    <!-- the text field where the user types -->
-    <input type="text" name="lunch_meat_autocomplete" style="width: 40ex" id="lunch_meat_autocomplete" />
-    <!-- the hidden field where the id of the selected option will be stored -->
-    <input type="hidden" name="lunch[meat_id]" id="lunch_meat_id" />
-    
-    <!-- option list will be put here -->
-    <div class="choices_container" id="lunch_meat_options"></div>
-  </div>  
+  <%= json_autocomplete(@lunch, :meat, meats_url) %>
 
-  <script type="text/javascript>
-    new JSON.Autocompleter(
-      'lunch_meats_autocomplete_container', 
-      'lunch_meat_options', 
-      '/meats.json'
-    )
-  </script>
+Or if you want to get more fancy:
 
+  <%= json_autocomplete(@lunch, :meat, meats_url,
+        :width => '30em', :with_form_elements => ['category_id']) %>
 
 Write a Rails controller to return the JSON data:
 
