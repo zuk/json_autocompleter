@@ -7,7 +7,7 @@ In other words, with a JSON.Autocompleter widget the user can either start typin
 what they're looking for, or they can click a list pulldown.
 
 <b>TODO:</b>
-* It would be nice if this plugin included some Rails helpers.
+* Occassional display glitches (some possible cross-browser compatibility issues, etc.)
 * The Autocompleter initializer should be more customizable (for example, we might
   want to set a custom URL for the list pulldown image).
 * Code needs to be cleaned up...
