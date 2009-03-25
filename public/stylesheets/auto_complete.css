@@ -1,6 +1,8 @@
 div.auto_complete {
   width: 420px;
   /*background-color: #fff ;*/
+  white-space: nowrap;
+  position: relative;
 }
 div.auto_complete ul {
   margin:0;

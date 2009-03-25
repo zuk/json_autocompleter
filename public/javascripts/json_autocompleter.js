@@ -17,12 +17,20 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     pulldown = document.createElement('img');
     pulldown.setAttribute('src', 'http://apps.urbacon.net/assets/images/pulldown.png');
     pulldown.setAttribute('alt', 'Show All');
-    pulldown.setAttribute('style', 'position: absolute;');
+    
+    pulldown.style.position = 'absolute';
+    pulldown.style.right = '-2px';
+    pulldown.style.top = '2px';
+    pulldown.style.cursor = 'pointer';
+    
+    if (Prototype.Browser.IE) {
+      pulldown.style.right = '-4px';
+      pulldown.style.top = '3px';
+    }
+    
     this.container.appendChild(pulldown);
     this.pulldownTrigger = pulldown;
-    
-    setTimeout(this.positionPulldownTrigger.bindAsEventListener(this), 50);
-    
+
     Event.observe(this.element, 'dblclick', this.getAllChoices.bindAsEventListener(this));
     Event.observe(this.pulldownTrigger, 'click', this.pulldown.bindAsEventListener(this));
   },
@@ -34,18 +42,7 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
       this.hide();
     }
   },
-  
-  positionPulldownTrigger: function() {
-    pulldown_x = (this.element.positionedOffset().left + 
-      this.element.getWidth() - 
-      16) + 'px';
-    pulldown_y = (this.pulldownTrigger.positionedOffset().top + 2) + 'px';
-    
-    this.pulldownTrigger.style.left = pulldown_x;
-    this.pulldownTrigger.style.top = pulldown_y;
-    
-    this.pulldownTrigger = pulldown;
-  },
+
   
   show: function() {
     if(Element.getStyle(this.update, 'display')=='none') this.options.onShow(this.element, this.update);
@@ -60,7 +57,7 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     }
     if(this.iefix) setTimeout(this.fixIEOverlapping.bind(this), 50);
     
-    setTimeout(this.fixSize.bind(this), 50);
+    setTimeout(this.fixSize.bind(this), 100);
   },
 
   fixSize: function() {
