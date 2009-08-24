@@ -20,6 +20,8 @@ module JsonAutocompleteHelper
     as_user_id      = as_user_id.id if as_user_id.kind_of?(User)
     
     on_change       = options[:onchange] || "null"
+
+    label_attribute = options[:label_attribute] || "name"
     
     if as_user_id
       choices_url << (choices_url.include?('?') ? "&" : "?") + "perform_as_user_id=#{as_user_id}"
@@ -62,15 +64,18 @@ module JsonAutocompleteHelper
     end
     
     type_field = %{<input type="hidden" name="#{type_field_name}" id="#{base_field_id}_type" class="type" />} if options[:include_type_field]
-    
+    autocomplete_field = %{<input type="text"   name="#{base_field_id}_autocomplete" style="width: #{width}" id="#{base_field_id}_autocomplete" class="text" value="#{current_name}" />}
+
     container = %{
       <div class="auto_complete" id="#{base_field_id}_autocomplete_container" style="#{style}">
-        <input type="text"   name="#{base_field_id}_autocomplete" style="width: #{width}" id="#{base_field_id}_autocomplete" class="text" value="#{current_name}" />
+        #{autocomplete_field}
         <input type="hidden" name="#{id_field_name}" id="#{base_field_id}_id" class="id" value="#{current_id}" />
         #{type_field}
         <div class="choices_container" id="#{base_field_id}_options"></div>
       </div>
     }
+
+    container = ActionView::Base.field_error_proc.call(container, self) if record.errors.on("#{association}") || record.errors.on("#{association}_id")
     
     javascript = javascript_tag %{
       var #{js_var_name} = new JSON.Autocompleter(
@@ -80,7 +85,8 @@ module JsonAutocompleteHelper
         {
           'parameters': #{with}, 
           'withFormElements': #{with_form_elements}, 
-          'onchange': #{on_change}
+          'onchange': #{on_change},
+          'labelAttribute': '#{label_attribute}'
         }
       )
     }
