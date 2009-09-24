@@ -17,7 +17,7 @@ what they're looking for, or they can click a list pulldown.
 
 Install as a plugin into your Rails app:
 
-  script/plugin install git://github.com/zuk/json_autocompleter.git
+  ruby script/plugin install git://github.com/zuk/json_autocompleter.git
 
 The required scripts, stylesheets, and images will be copied automatically into your
 /public folder during the install.
