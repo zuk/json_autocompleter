@@ -53,7 +53,7 @@ module JsonAutocompleteHelper
     end
     with_form_elements = wfe
     
-    
+    choices_url = url_for(choices_url) if choices_url.kind_of?(Hash)
     # modify the URL to make sure we're requesting a response in JSON format
     choices_url.sub!(/\?|$/, ".json#{'?' if choices_url.include?('?')}") unless choices_url.include? '.json'
     
@@ -75,7 +75,7 @@ module JsonAutocompleteHelper
       </div>
     }
 
-    container = ActionView::Base.field_error_proc.call(container, self) if record.errors.on("#{association}") || record.errors.on("#{association}_id")
+    container = ActionView::Base.field_error_proc.call(container, self) if record.errors && (record.errors.on("#{association}") || record.errors.on("#{association}_id"))
     
     javascript = javascript_tag %{
       var #{js_var_name} = new JSON.Autocompleter(
