@@ -57,7 +57,7 @@ module JsonAutocompleteHelper
     end
     with_form_elements = wfe
     
-    
+    choices_url = url_for(choices_url) if choices_url.kind_of?(Hash)
     # modify the URL to make sure we're requesting a response in JSON format
     choices_url.sub!(/\?|$/, ".json#{'?' if choices_url.include?('?')}") unless choices_url.include? '.json'
     
