@@ -13,6 +13,7 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     this.options.method        = this.options.method || 'get';
     this.options.paramName     = 'autocomplete';
     this.options.labelAttribute = this.options.labelAttribute || 'name'
+    this.options.disablePulldown = this.options.disablePulldown || false
 
     pulldown = document.createElement('img');
     pulldown.setAttribute('src', 'http://apps.urbacon.net/assets/images/pulldown.png');
@@ -28,11 +29,13 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
       pulldown.style.top = '3px';
     }
 
-    this.container.appendChild(pulldown);
+    if (!this.options.disablePulldown)
+      this.container.appendChild(pulldown);
     this.pulldownTrigger = pulldown;
 
     Event.observe(this.element, 'dblclick', this.getAllChoices.bindAsEventListener(this));
     Event.observe(this.pulldownTrigger, 'click', this.pulldown.bindAsEventListener(this));
+    Event.observe(this.element, 'change', this.onChange.bindAsEventListener(this));
   },
 
   pulldown: function(event) {
@@ -53,6 +56,12 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
       this.hasFocus = false;
       this.active = false;
     }
+  },
+
+  onChange: function(event) {
+    // we use the onchange event to clear the id_field if the autocomplete field has been cleared
+    if (this.element.value == "")
+      this.id_field.value = ""
   },
 
   show: function() {
