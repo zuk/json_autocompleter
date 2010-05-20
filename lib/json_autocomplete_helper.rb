@@ -23,7 +23,7 @@ module JsonAutocompleteHelper
     as_user_id      = options[:as_user]
     as_user_id      = as_user_id.id if as_user_id && !as_user_id.kind_of?(Integer)
     
-    on_change       = options[:onchange] || "null"
+    on_change       = options[:onchange] || options[:on_change] || "null"
 
     label_attribute = options[:label_attribute] || "name"
     
