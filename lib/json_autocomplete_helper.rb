@@ -21,7 +21,7 @@ module JsonAutocompleteHelper
     width           = options[:width] || "30ex"
     
     as_user_id      = options[:as_user]
-    as_user_id      = as_user_id.id if as_user_id.kind_of?(User)
+    as_user_id      = as_user_id.id unless as_user_id.kind_of?(Integer)
     
     on_change       = options[:onchange] || "null"
 
