@@ -86,7 +86,7 @@ module JsonAutocompleteHelper
     container = ActionView::Base.field_error_proc.call(container, self) if record.errors && (record.errors.on("#{association}") || record.errors.on("#{association}_id"))
     
     javascript = javascript_tag %{
-      var #{js_var_name} = new JSON.Autocompleter(
+      window.#{js_var_name} = new JSON.Autocompleter(
         '#{base_field_id}_autocomplete_container', 
         '#{base_field_id}_options', 
         '#{choices_url}',
