@@ -153,7 +153,8 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     this.id_field.value = id_value
 
     if (previous_id_value != id_value && this.options.onchange) {
-      this.options.onchange(id_value);
+      this.options.onchange(this);
+      this.id_field.up('form').onchange() // notify the parent form that someting has changed
     }
 
     this.oldElementValue = this.element.value;
