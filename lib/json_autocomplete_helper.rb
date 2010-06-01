@@ -93,7 +93,7 @@ module JsonAutocompleteHelper
         {
           'parameters': #{with}, 
           'withFormElements': #{with_form_elements}, 
-          'onchange': #{on_change},
+          'onChange': #{on_change},
           'labelAttribute': '#{label_attribute}',
           'disablePulldown': #{options[:disable_pulldown] || false},
           'indicator': '#{options[:progress_indicator]}'
