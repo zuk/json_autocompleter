@@ -14,6 +14,10 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     this.options.paramName     = 'autocomplete';
     this.options.labelAttribute = this.options.labelAttribute || 'name'
     this.options.disablePulldown = this.options.disablePulldown || false
+    this.options.onChange      = this.options.onChange || this.options.onchange
+
+    if (typeof(this.options.defaultParams) != 'string')
+      this.options.defaultParams = $H(this.options.defaultParams).collect(function(p){return p[0]+"="+p[1]}).join("&");
 
     pulldown = document.createElement('img');
     pulldown.setAttribute('src', 'http://apps.urbacon.net/assets/images/pulldown.png');
@@ -33,6 +37,9 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
       this.container.appendChild(pulldown);
     this.pulldownTrigger = pulldown;
 
+    if (this.options.onChange)
+      this.id_field.observe('change', this.options.onChange)
+
     Event.observe(this.element, 'dblclick', this.getAllChoices.bindAsEventListener(this));
     Event.observe(this.pulldownTrigger, 'click', this.pulldown.bindAsEventListener(this));
     Event.observe(this.element, 'change', this.onChange.bindAsEventListener(this));
@@ -42,6 +49,8 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     if (Element.getStyle(this.update, 'display') == 'none') {
       this.active = true;
       this.element.focus();
+      this.id_field.value = "";
+      this.element.value = "";
       this.getAllChoices(event);
     } else {
       this.active = false;
@@ -102,8 +111,12 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
     this.options.parameters = this.options.callback ?
       this.options.callback(this.element, entry) : entry;
 
+
     if(this.options.defaultParams)
       this.options.parameters += '&' + this.options.defaultParams;
+
+    this.options.parameters +=
+      '&' + $H(this.options.withFormElements).collect(function(el){return el[0]+"="+$F(el[1])}).join("&");
 
     new Ajax.Request(this.url, this.options);
   },
@@ -152,8 +165,9 @@ JSON.Autocompleter = Class.create(Autocompleter.Base, {
 
     this.id_field.value = id_value
 
-    if (previous_id_value != id_value && this.options.onchange) {
-      this.options.onchange(this);
+    if (previous_id_value != id_value) {
+      if (this.options.onChange)
+        this.options.onChange(this)
       if (this.id_field.up('form').onchange)
         this.id_field.up('form').onchange() // notify the parent form that someting has changed
     }
