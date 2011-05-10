@@ -26,7 +26,7 @@ JSON.Autocompleter is based on the script.aculo.us Autocompleter. This is packag
 with Rails, so all you have to do is make sure the following scripts are loaded
 in your page:
 
-  <%= javascript_include_tag 'controls', 'json2', 'json_autocomplete' %>
+  <%= javascript_include_tag 'controls', 'json2', 'json_autocompleter' %>
 
 Also don't forget to link to the <em>auto_complete.css</em> stylesheet:
 
