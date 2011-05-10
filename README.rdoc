@@ -42,7 +42,7 @@ Set up the widget:
 Or if you want to get more fancy:
 
   <%= json_autocomplete(@lunch, :meat, meats_url,
-        :width => '30em', :with_form_elements => ['category_id']) %>
+        :width => '30em', :label_attribute => :description, :with_form_elements => ['category_id']) %>
 
 Write a Rails controller to return the JSON data:
 
@@ -52,7 +52,7 @@ Write a Rails controller to return the JSON data:
       @meats = Meat.find(:all)
 
       respond_to do |format|
-        format.json { render :json => @meats.to_json(:methods => [:to_s] }
+        format.json { render :json => @meats }
       end
     end
   end
@@ -63,19 +63,26 @@ will be modified to allow for a custom field name to be used).
 
 The JSON data returned by your controller action should look something like this:
 
-  [{"meat": {"id": 1, "to_s": "Salami"}},
-   {"meat": {"id": 2, "to_s": "Ham"}},
-   {"meat": {"id": 3, "to_s": "Hot Dog"}}]
+  [{"meat": {"id": 1, "name": "Salami"}},
+   {"meat": {"id": 2, "name": "Ham"}},
+   {"meat": {"id": 3, "name": "Hot Dog"}}]
 
 Or this will work too:
 
-  [{"id": 1, "to_s": "Salami"},
-   {"id": 2, "to_s": "Ham"},
-   {"id": 3, "to_s": "Hot Dog"}]
+  [{"id": 1, "name": "Salami"},
+   {"id": 2, "name": "Ham"},
+   {"id": 3, "name": "Hot Dog"}]
 
+If instead of "name" you want to use some other attribute or method, specify it in the helper under the :label_attribute option, like so:
 
+  <%= json_autocomplete(@lunch, :meat, meats_url,
+        :label_attribute => :to_s) %>
 
+The corresponding JSON data should look like this:
 
+  [{"meat": {"id": 1, "to_s": "Salami"}},
+   {"meat": {"id": 2, "to_s": "Ham"}},
+   {"meat": {"id": 3, "to_s": "Hot Dog"}}]
 
 
 Copyright (c) 2009 Matt Zukowski, released under the MIT license
